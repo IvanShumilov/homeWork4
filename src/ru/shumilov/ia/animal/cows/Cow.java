@@ -1,17 +1,16 @@
-package ru.shumilov.ia.animal.dogs;
+package ru.shumilov.ia.animal.cows;
 
 import ru.shumilov.ia.animal.Animal;
 import ru.shumilov.ia.annotations.Domesticated;
 
 @Domesticated
-public class Dog extends Animal {
-
-    Dog(String name) {
+public class Cow extends Animal {
+    Cow(String name) {
         super(name);
-        setType("Собака");
+        setType("Корова");
     }
 
     public void talk() {
-        super.talk("Woof");
+        super.talk("Muu");
     }
 }

@@ -1,9 +1,13 @@
 package ru.shumilov.ia;
 
-import ru.shumilov.ia.animal.cats.Bombay;
-import ru.shumilov.ia.animal.cats.Persian;
-import ru.shumilov.ia.animal.dogs.Basenji;
-import ru.shumilov.ia.animal.dogs.Beagle;
+import ru.shumilov.ia.animal.Animal;
+import ru.shumilov.ia.animal.bear.Bear;
+import ru.shumilov.ia.animal.bear.WhiteBear;
+import ru.shumilov.ia.animal.cats.*;
+import ru.shumilov.ia.animal.cows.MilkaCow;
+import ru.shumilov.ia.animal.dogs.*;
+import ru.shumilov.ia.animal.wolf.White;
+import ru.shumilov.ia.calendar.Week;
 
 public class Main {
 
@@ -16,7 +20,7 @@ public class Main {
         beagle.getAbout();
         beagle.talk();
         System.out.println("set die");
-        beagle.setDie(true);
+        beagle.setDie();
         beagle.talk();
 
 
@@ -24,36 +28,42 @@ public class Main {
         pers.getAbout();
         pers.talk();
         System.out.println("set sleep");
-        pers.setSleep(true);
+        pers.setSleep();
 
 
         Bombay bombay = new Bombay("Macharadz");
         bombay.getAbout();
         bombay.talk();
         System.out.println("set sleep");
-        bombay.setSleep(true);
+        bombay.setSleep();
         bombay.talk();
         System.out.println("set wakeup");
-        bombay.setSleep(false);
+        bombay.setAwake();
         bombay.talk();
         System.out.println(bombay.getName() + " is walk");
-        bombay.setAwake(true);
+        bombay.setAwake();
         bombay.talk();
-        bombay.setDie(true);
-        bombay.setAwake(false);
+        bombay.setDie();
+        bombay.setAwake();
 
 
-        System.out.println(bombay.hashCode());
 
         Bombay bombay1 = new Bombay("Felix");
         Bombay bombay2 = new Bombay("Felix");
+        Javanese jap = new Javanese("Felix");
 
-        int i = 1;
-        System.out.println((bombay1.equals(bombay2)) + " #" + String.valueOf(i++));
-        System.out.println(bombay.equals(bombay2) + " #" + String.valueOf(i++));
-        System.out.println(pers.equals(bombay2)+ " #" + String.valueOf(i++));
-        System.out.println(beagle.equals(beagle1)+ " #" + String.valueOf(i++));
-        System.out.println(beagle.equals(basenji)+ " #" + String.valueOf(i++));
-        System.out.println(beagle.equals(pers)+ " #" + String.valueOf(i++));
+
+
+//        Бонус к домашней работе
+
+        Week.getDay();
+
+        Bear bear = new WhiteBear("Burny");
+
+        bear.getAbout();
+
+        beagle.checkDomesticated();
+
+        Animal.checkArrayDomesticated(beagle, beagle1, jap, bear, bombay, bombay1, bombay2, basenji, new White("Grey"), new MilkaCow("Burenka"));
     }
 }

@@ -1,16 +1,19 @@
 package ru.shumilov.ia.animal;
 
+import org.jetbrains.annotations.NotNull;
+import ru.shumilov.ia.annotations.Domesticated;
+
 public abstract class Animal {
 
     private String name;
     private String type;
     private String breed;
-    private boolean die;
-    private boolean sleep;
-    private boolean awake;
+    private Flags state;
 
     public Animal(String name) {
+
         this.name = name;
+        state = Flags.BORN;
     }
 
     public String getName() {
@@ -33,40 +36,25 @@ public abstract class Animal {
         this.breed = breed;
     }
 
-    private boolean isDie() {
-        return die;
-    }
-
-    public final void setDie(boolean die) {
-        if (isDie()) {
+    public final void setDie() {
+        if (Flags.DEAD == state) {
             System.out.println("Sorry " + getName() + " is die");
-        } else {
-            this.die = die;
         }
+        state = Flags.DEAD;
     }
 
-    private boolean isSleep() {
-        return sleep;
-    }
-
-    public final void setSleep(boolean sleep) {
-        if (isDie()) {
+    public final void setSleep() {
+        if (Flags.DEAD == state) {
             System.out.println("Sorry " + getName() + " is die");
-        } else {
-            this.sleep = sleep;
         }
+        state = Flags.SLEEPING;
     }
 
-    public final boolean isAwake() {
-        return awake;
-    }
-
-    public final void setAwake(boolean awake) {
-        if (isDie()) {
+    public final void setAwake() {
+        if (Flags.DEAD == state) {
             System.out.println("Sorry " + getName() + " is die");
-        } else {
-            this.awake = awake;
         }
+        state = Flags.AWAKEN;
     }
 
     public void getAbout() {
@@ -78,7 +66,8 @@ public abstract class Animal {
     }
 
     protected void talk(String sayWhat) {
-        if (!isDie() && !isSleep()) {
+
+        if ((Flags.BORN == state) || (Flags.AWAKEN == state)) {
             System.out.println(sayWhat);
         }
     }
@@ -94,9 +83,7 @@ public abstract class Animal {
         Animal other = (Animal) obj;
         if (!getBreed().equalsIgnoreCase(other.getBreed()))
             return false;
-        if (!getType().equalsIgnoreCase(other.getType()))
-            return false;
-        return true;
+        return getType().equalsIgnoreCase(other.getType());
     }
 
     @Override
@@ -108,5 +95,25 @@ public abstract class Animal {
         return result;
     }
 
+    public void checkDomesticated() {
+        Domesticated[] annotations = this.getClass().getAnnotationsByType(Domesticated.class);
+        for (Domesticated learning : annotations) {
+            System.out.println("Аннотация: " + learning.toString());
+            System.out.println("Утверждает что животное: \"" + this.getType() + "\"  \"" + learning.domesticated());
+        }
+    }
 
+    public static void checkArrayDomesticated(@NotNull Animal ... animals){
+        for(Animal animal : animals){
+            animal.checkDomesticated();
+        }
+
+    }
+
+    enum Flags {
+        SLEEPING,
+        AWAKEN,
+        BORN,
+        DEAD
+    }
 }
